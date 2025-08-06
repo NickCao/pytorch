@@ -320,7 +320,7 @@ if __name__ == "__main__":
     build_vars = "CMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=0x10000 "
     # MAX_JOB=5 is not required for CPU backend (see commit 465d98b)
     if enable_cuda:
-        build_vars += "MAX_JOBS=5 "
+        build_vars += "MAX_JOBS=2 "
 
         # Handle PyPI NVIDIA libraries vs bundled libraries
         use_nvidia_pypi_libs = os.getenv("USE_NVIDIA_PYPI_LIBS", "0") == "1"
