@@ -2397,7 +2397,7 @@ Call this whenever a new thread is created in order to propagate values from
   });
   py_module.def("_is_vulkan_available", []() {
 #ifdef USE_VULKAN_API
-    return at::native::is_vulkan_available();
+    return at::is_vulkan_available();
 #else
     return false;
 #endif
