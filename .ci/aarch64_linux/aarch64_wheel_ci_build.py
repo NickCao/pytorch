@@ -301,6 +301,7 @@ def parse_arguments():
     parser.add_argument("--build-only", action="store_true")
     parser.add_argument("--test-only", type=str)
     parser.add_argument("--enable-mkldnn", action="store_true")
+    parser.add_argument("--enable-vulkan", action="store_true")
     parser.add_argument("--enable-cuda", action="store_true")
     return parser.parse_args()
 
@@ -311,6 +312,7 @@ if __name__ == "__main__":
     """
     args = parse_arguments()
     enable_mkldnn = args.enable_mkldnn
+    enable_vulkan = args.enable_vulkan
     enable_cuda = args.enable_cuda
     branch = check_output(
         ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd="/pytorch"
@@ -371,6 +373,12 @@ if __name__ == "__main__":
             build_vars += "BLAS=OpenBLAS OpenBLAS_HOME=/OpenBLAS "
     else:
         print("build pytorch without mkldnn backend")
+
+    if enable_vulkan:
+        print("build pytorch with vulkan backend")
+        build_vars += "USE_VULKAN=ON "
+    else:
+        print("build pytorch without vulkan backend")
 
     os.system(f"cd /pytorch; {build_vars} python3 setup.py bdist_wheel")
     if enable_cuda:
